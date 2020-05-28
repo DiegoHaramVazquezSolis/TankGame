@@ -25,6 +25,28 @@ void ATankAIController::BeginPlay()
     }
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    Aiming();
+}
+
+void ATankAIController::Aiming()
+{
+    ATank* PlayerTank = GetPlayerTank();
+    if (PlayerTank)
+    {
+        ATank* ControlledTank = GetControlledTank();
+        if (ControlledTank)
+        {
+            ControlledTank->AimAt(PlayerTank->GetActorLocation());
+        }
+    } else {
+        UE_LOG(LogTemp, Error, TEXT("Player tank unreachable"));
+    }
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
     return Cast<ATank>(GetPawn());
