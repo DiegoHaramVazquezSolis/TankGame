@@ -48,7 +48,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
     FVector LookDirection;
     if (GetLookDirection(ScreenLocation, LookDirection))
     {
-        UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());
+        GetLookVectorHitLocation(LookDirection, OutHitLocation);
+        UE_LOG(LogTemp, Display, TEXT("OutHit: %s"), *OutHitLocation.ToString());
     } else {
         UE_LOG(LogTemp, Warning, TEXT("unable to determine LookDirection value"));
     }
@@ -66,6 +67,27 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &
             CameraWorldLocation,
             LookDirection
         );
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector &OutHitLocation) const
+{
+    FHitResult HitResult;
+    FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+    FVector EndLocation = StartLocation + (LookDirection * LineTraceRange);
+    if (GetWorld()->LineTraceSingleByChannel(
+            HitResult,
+            StartLocation,
+            EndLocation,
+            ECollisionChannel::ECC_Visibility
+        )
+    )
+    {
+        OutHitLocation = HitResult.Location;
+        return true;
+    }
+
+    OutHitLocation = FVector(0.f);
+    return false;
 }
 
 ATank* ATankPlayerController::GetControlledTank() const

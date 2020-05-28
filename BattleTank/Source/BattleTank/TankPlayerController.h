@@ -25,6 +25,8 @@ private:
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const;
 
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector &OutHitLocation) const;
+
 public:
 	virtual void Tick(float DeltaTime) override;
 
@@ -35,4 +37,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = .33333f;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000;
 };
