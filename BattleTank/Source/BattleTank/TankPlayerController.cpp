@@ -45,8 +45,27 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
     int32 ViewportSizeX, ViewportSizeY;
     GetViewportSize(ViewportSizeX, ViewportSizeY);
     FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+    FVector LookDirection;
+    if (GetLookDirection(ScreenLocation, LookDirection))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());
+    } else {
+        UE_LOG(LogTemp, Warning, TEXT("unable to determine LookDirection value"));
+    }
 
     return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const
+{
+    FVector CameraWorldLocation;
+
+    return DeprojectScreenPositionToWorld(
+            ScreenLocation.X,
+            ScreenLocation.Y,
+            CameraWorldLocation,
+            LookDirection
+        );
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
