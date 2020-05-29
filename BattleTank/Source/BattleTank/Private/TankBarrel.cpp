@@ -5,5 +5,5 @@
 
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Barrel->Elevat(%f)"), RelativeSpeed);
+    
 }
