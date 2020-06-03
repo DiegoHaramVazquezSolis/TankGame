@@ -15,3 +15,9 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
     LeftTrack->SetTankThrottle(Throw);
     RightTrack->SetTankThrottle(Throw);
 }
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+    LeftTrack->SetTankThrottle(Throw);
+    RightTrack->SetTankThrottle(-Throw);
+}
