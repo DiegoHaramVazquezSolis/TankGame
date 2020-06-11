@@ -22,4 +22,8 @@ public:
 	void Aiming();
 
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float AcceptanceRadius = 3000.f;
 };

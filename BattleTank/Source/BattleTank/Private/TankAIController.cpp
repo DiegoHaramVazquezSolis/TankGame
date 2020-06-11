@@ -25,6 +25,8 @@ void ATankAIController::Aiming()
         ATank* ControlledTank = Cast<ATank>(GetPawn());
         if (ControlledTank)
         {
+            MoveToActor(PlayerTank, AcceptanceRadius);
+
             ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
             ControlledTank->Fire();
